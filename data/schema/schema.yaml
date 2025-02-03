@@ -1,0 +1,1858 @@
+version: 1
+directus: 11.4.0
+vendor: mysql
+collections:
+  - collection: journal
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: journal
+      color: null
+      display_template: null
+      group: null
+      hidden: false
+      icon: null
+      item_duplication_fields: null
+      note: null
+      preview_url: null
+      singleton: false
+      sort: null
+      sort_field: null
+      translations:
+        - language: lt-LT
+          translation: Registracijos žurnalas
+      unarchive_value: null
+      versioning: false
+    schema:
+      name: journal
+  - collection: pharmacies
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: status
+      archive_value: archived
+      collapse: open
+      collection: pharmacies
+      color: null
+      display_template: null
+      group: null
+      hidden: false
+      icon: home_health
+      item_duplication_fields: null
+      note: null
+      preview_url: null
+      singleton: false
+      sort: null
+      sort_field: sort
+      translations:
+        - language: lt-LT
+          translation: Vaistinės
+      unarchive_value: draft
+      versioning: false
+    schema:
+      name: pharmacies
+  - collection: pharmacy_units
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: status
+      archive_value: archived
+      collapse: open
+      collection: pharmacy_units
+      color: null
+      display_template: null
+      group: null
+      hidden: false
+      icon: health_and_safety
+      item_duplication_fields: null
+      note: null
+      preview_url: null
+      singleton: false
+      sort: null
+      sort_field: sort
+      translations:
+        - language: lt-LT
+          translation: Vaistinių padaliniai
+      unarchive_value: draft
+      versioning: false
+    schema:
+      name: pharmacy_units
+fields:
+  - collection: directus_users
+    field: pharmacy_unit
+    type: string
+    meta:
+      collection: directus_users
+      conditions:
+        - name: if role pharmacy_admin then not required
+          options:
+            enableCreate: true
+            enableLink: false
+            enableSelect: true
+          required: false
+          rule:
+            _and:
+              - role:
+                  _eq: d9e1332d-1df4-4ff9-bd63-7761082854a7
+      display: null
+      display_options: null
+      field: pharmacy_unit
+      group: null
+      hidden: false
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        enableCreate: false
+        filter:
+          _and:
+            - pharmacy:
+                _eq: '{{ pharmacy }}'
+        template: '{{address}}'
+      readonly: false
+      required: true
+      sort: 2
+      special:
+        - m2o
+      translations:
+        - language: lt-LT
+          translation: Vaistinės padalinys
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: pharmacy_unit
+      table: directus_users
+      data_type: char
+      default_value: null
+      max_length: 36
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: true
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: pharmacy_units
+      foreign_key_column: id
+  - collection: directus_users
+    field: pharmacy
+    type: integer
+    meta:
+      collection: directus_users
+      conditions: null
+      display: null
+      display_options: null
+      field: pharmacy
+      group: null
+      hidden: false
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        enableCreate: false
+        template: '{{title}}'
+      readonly: false
+      required: true
+      sort: 1
+      special:
+        - m2o
+      translations:
+        - language: lt-LT
+          translation: Vaistinė
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: pharmacy
+      table: directus_users
+      data_type: int unsigned
+      default_value: null
+      max_length: null
+      numeric_precision: 10
+      numeric_scale: 0
+      is_nullable: true
+      is_unique: false
+      is_indexed: true
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: pharmacies
+      foreign_key_column: id
+  - collection: journal
+    field: id
+    type: integer
+    meta:
+      collection: journal
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 1
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: id
+      table: journal
+      data_type: bigint unsigned
+      default_value: null
+      max_length: null
+      numeric_precision: 20
+      numeric_scale: 0
+      is_nullable: false
+      is_unique: false
+      is_indexed: false
+      is_primary_key: true
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: true
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: journal
+    field: user_created
+    type: string
+    meta:
+      collection: journal
+      conditions: null
+      display: user
+      display_options: null
+      field: user_created
+      group: null
+      hidden: true
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        template: '{{avatar}} {{first_name}} {{last_name}}'
+      readonly: true
+      required: false
+      sort: 2
+      special:
+        - user-created
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: user_created
+      table: journal
+      data_type: char
+      default_value: null
+      max_length: 36
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: true
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: directus_users
+      foreign_key_column: id
+  - collection: journal
+    field: date_created
+    type: timestamp
+    meta:
+      collection: journal
+      conditions: null
+      display: datetime
+      display_options:
+        relative: true
+      field: date_created
+      group: null
+      hidden: true
+      interface: datetime
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 3
+      special:
+        - date-created
+      translations:
+        - language: lt-LT
+          translation: Sukūrimo data
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: date_created
+      table: journal
+      data_type: timestamp
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: journal
+    field: user_updated
+    type: string
+    meta:
+      collection: journal
+      conditions: null
+      display: user
+      display_options: null
+      field: user_updated
+      group: null
+      hidden: true
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        template: '{{avatar}} {{first_name}} {{last_name}}'
+      readonly: true
+      required: false
+      sort: 4
+      special:
+        - user-updated
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: user_updated
+      table: journal
+      data_type: char
+      default_value: null
+      max_length: 36
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: true
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: directus_users
+      foreign_key_column: id
+  - collection: journal
+    field: date_updated
+    type: timestamp
+    meta:
+      collection: journal
+      conditions: null
+      display: datetime
+      display_options:
+        relative: true
+      field: date_updated
+      group: null
+      hidden: true
+      interface: datetime
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 5
+      special:
+        - date-updated
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: date_updated
+      table: journal
+      data_type: timestamp
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: journal
+    field: pharmacy_unit
+    type: string
+    meta:
+      collection: journal
+      conditions: null
+      display: related-values
+      display_options:
+        template: '{{address}}'
+      field: pharmacy_unit
+      group: null
+      hidden: false
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        enableCreate: false
+        template: '{{address}}'
+      readonly: false
+      required: true
+      sort: 7
+      special:
+        - m2o
+      translations:
+        - language: lt-LT
+          translation: Vaistinės padalinys
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: pharmacy_unit
+      table: journal
+      data_type: char
+      default_value: null
+      max_length: 36
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: true
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: pharmacy_units
+      foreign_key_column: id
+  - collection: journal
+    field: municipality
+    type: string
+    meta:
+      collection: journal
+      conditions:
+        - hidden: false
+          name: if non vilnius resident then need to select municipality
+          options:
+            allowNone: false
+            allowOther: false
+          required: true
+          rule:
+            _and:
+              - vilnius_resident:
+                  _eq: false
+      display: null
+      display_options: null
+      field: municipality
+      group: null
+      hidden: false
+      interface: select-dropdown
+      note: null
+      options:
+        allowOther: true
+        choices:
+          - text: Akmenės r. sav.
+            value: Akmenės r. sav.
+          - text: Anykščių r. sav.
+            value: Anykščių r. sav.
+          - text: Alytaus r. sav.
+            value: Alytaus r. sav.
+          - text: Alytaus m. sav.
+            value: Alytaus m. sav.
+          - text: Birštono sav.
+            value: Birštono sav.
+          - text: Druskininkų sav.
+            value: Druskininkų sav.
+          - text: Ignalinos r. sav.
+            value: Ignalinos r. sav.
+          - text: Jonavos r. sav.
+            value: Jonavos r. sav.
+          - text: Kauno m. sav.
+            value: Kauno m. sav.
+          - text: Kauno r. sav.
+            value: Kauno r. sav.
+          - text: Kėdainių r. sav.
+            value: Kėdainių r. sav.
+          - text: Klaipėdos m. sav.
+            value: Klaipėdos m. sav.
+          - text: Klaipėdos r. sav.
+            value: Klaipėdos r. sav.
+          - text: Kretingos r. sav.
+            value: Kretingos r. sav.
+          - text: Mažeikių r. sav.
+            value: Mažeikių r. sav.
+          - text: Molėtų r. sav.
+            value: Molėtų r. sav.
+          - text: Neringos sav.
+            value: Neringos sav.
+          - text: Panevėžio m. sav.
+            value: Panevėžio m. sav.
+          - text: Panevėžio r. sav.
+            value: Panevėžio r. sav.
+          - text: Pasvalio r. sav.
+            value: Pasvalio r. sav.
+          - text: Prienų r. sav.
+            value: Prienų r. sav.
+          - text: Rajonų sav.
+            value: Rajonų sav.
+          - text: Raseinių r. sav.
+            value: Raseinių r. sav.
+          - text: Rokiškio r. sav.
+            value: Rokiškio r. sav.
+          - text: Skuodo r. sav.
+            value: Skuodo r. sav.
+          - text: Tauragės m. sav.
+            value: Tauragės m. sav.
+          - text: Telšių r. sav.
+            value: Telšių r. sav.
+          - text: Utenos r. sav.
+            value: Utenos r. sav.
+          - text: Varėnos r. sav.
+            value: Varėnos r. sav.
+          - text: Vilniaus m. sav.
+            value: Vilniaus m. sav.
+          - text: Vilniaus r. sav.
+            value: Vilniaus r. sav.
+          - text: Visagino m. sav.
+            value: Visagino m. sav.
+          - text: Zarasų r. sav.
+            value: Zarasų r. sav.
+      readonly: false
+      required: true
+      sort: 10
+      special: null
+      translations:
+        - language: lt-LT
+          translation: Savivaldybė
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: municipality
+      table: journal
+      data_type: varchar
+      default_value: Vilniaus m. sav.
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: journal
+    field: no_lt_personal_code
+    type: boolean
+    meta:
+      collection: journal
+      conditions: null
+      display: boolean
+      display_options: null
+      field: no_lt_personal_code
+      group: null
+      hidden: false
+      interface: boolean
+      note: null
+      options:
+        label: null
+      readonly: false
+      required: false
+      sort: 9
+      special:
+        - cast-boolean
+      translations:
+        - language: lt-LT
+          translation: Neturi lietuviško asmens kodo
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: no_lt_personal_code
+      table: journal
+      data_type: boolean
+      default_value: false
+      max_length: null
+      numeric_precision: 3
+      numeric_scale: 0
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: journal
+    field: personal_code
+    type: string
+    meta:
+      collection: journal
+      conditions: null
+      display: formatted-value
+      display_options:
+        masked: true
+      field: personal_code
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options: {}
+      readonly: false
+      required: true
+      sort: 8
+      special: null
+      translations:
+        - language: lt-LT
+          translation: Asmens kodas
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: personal_code
+      table: journal
+      data_type: varchar
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: journal
+    field: status
+    type: string
+    meta:
+      collection: journal
+      conditions:
+        - hidden: false
+          name: show if item is created
+          options:
+            allowNone: false
+            allowOther: false
+          rule:
+            _and:
+              - date_created:
+                  _nnull: true
+      display: labels
+      display_options:
+        choices:
+          - background: var(--theme--primary-background)
+            color: '#2ECDA7'
+            foreground: '#2ECDA7'
+            text: $t:issued
+            value: issued
+          - background: var(--theme--background-normal)
+            color: '#E35169'
+            foreground: '#E35169'
+            text: $t:canceled
+            value: canceled
+        conditionalFormatting: null
+        defaultColor: null
+        format: false
+        showAsDot: true
+      field: status
+      group: null
+      hidden: true
+      interface: select-dropdown
+      note: null
+      options:
+        choices:
+          - color: '#2ECDA7'
+            text: $t:issued
+            value: issued
+          - color: '#E35169'
+            text: $t:canceled
+            value: canceled
+      readonly: false
+      required: false
+      sort: 6
+      special: null
+      translations:
+        - language: lt-LT
+          translation: Statusas
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: status
+      table: journal
+      data_type: varchar
+      default_value: issued
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: pharmacies
+    field: id
+    type: integer
+    meta:
+      collection: pharmacies
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 1
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: id
+      table: pharmacies
+      data_type: int unsigned
+      default_value: null
+      max_length: null
+      numeric_precision: 10
+      numeric_scale: 0
+      is_nullable: false
+      is_unique: false
+      is_indexed: false
+      is_primary_key: true
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: true
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: pharmacies
+    field: status
+    type: string
+    meta:
+      collection: pharmacies
+      conditions: null
+      display: labels
+      display_options:
+        choices:
+          - background: var(--theme--primary-background)
+            color: var(--theme--primary)
+            foreground: var(--theme--primary)
+            text: $t:published
+            value: published
+          - background: var(--theme--background-normal)
+            color: var(--theme--foreground)
+            foreground: var(--theme--foreground)
+            text: $t:draft
+            value: draft
+          - background: var(--theme--warning-background)
+            color: var(--theme--warning)
+            foreground: var(--theme--warning)
+            text: $t:archived
+            value: archived
+        showAsDot: true
+      field: status
+      group: null
+      hidden: true
+      interface: select-dropdown
+      note: null
+      options:
+        choices:
+          - color: var(--theme--primary)
+            text: $t:published
+            value: published
+          - color: var(--theme--foreground)
+            text: $t:draft
+            value: draft
+          - color: var(--theme--warning)
+            text: $t:archived
+            value: archived
+      readonly: false
+      required: false
+      sort: 2
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: status
+      table: pharmacies
+      data_type: varchar
+      default_value: draft
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: false
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: pharmacies
+    field: sort
+    type: integer
+    meta:
+      collection: pharmacies
+      conditions: null
+      display: null
+      display_options: null
+      field: sort
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: 3
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: sort
+      table: pharmacies
+      data_type: int
+      default_value: null
+      max_length: null
+      numeric_precision: 10
+      numeric_scale: 0
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: pharmacies
+    field: user_created
+    type: string
+    meta:
+      collection: pharmacies
+      conditions: null
+      display: user
+      display_options: null
+      field: user_created
+      group: null
+      hidden: true
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        template: '{{avatar}} {{first_name}} {{last_name}}'
+      readonly: true
+      required: false
+      sort: 4
+      special:
+        - user-created
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: user_created
+      table: pharmacies
+      data_type: char
+      default_value: null
+      max_length: 36
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: true
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: directus_users
+      foreign_key_column: id
+  - collection: pharmacies
+    field: date_created
+    type: timestamp
+    meta:
+      collection: pharmacies
+      conditions: null
+      display: datetime
+      display_options:
+        relative: true
+      field: date_created
+      group: null
+      hidden: true
+      interface: datetime
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 5
+      special:
+        - date-created
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: date_created
+      table: pharmacies
+      data_type: timestamp
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: pharmacies
+    field: user_updated
+    type: string
+    meta:
+      collection: pharmacies
+      conditions: null
+      display: user
+      display_options: null
+      field: user_updated
+      group: null
+      hidden: true
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        template: '{{avatar}} {{first_name}} {{last_name}}'
+      readonly: true
+      required: false
+      sort: 6
+      special:
+        - user-updated
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: user_updated
+      table: pharmacies
+      data_type: char
+      default_value: null
+      max_length: 36
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: true
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: directus_users
+      foreign_key_column: id
+  - collection: pharmacies
+    field: date_updated
+    type: timestamp
+    meta:
+      collection: pharmacies
+      conditions: null
+      display: datetime
+      display_options:
+        relative: true
+      field: date_updated
+      group: null
+      hidden: true
+      interface: datetime
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 7
+      special:
+        - date-updated
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: date_updated
+      table: pharmacies
+      data_type: timestamp
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: pharmacies
+    field: title
+    type: string
+    meta:
+      collection: pharmacies
+      conditions: null
+      display: null
+      display_options: null
+      field: title
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: true
+      sort: 8
+      special: null
+      translations:
+        - language: lt-LT
+          translation: Pavadinimas
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: title
+      table: pharmacies
+      data_type: varchar
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: pharmacies
+    field: code
+    type: string
+    meta:
+      collection: pharmacies
+      conditions: null
+      display: null
+      display_options: null
+      field: code
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: true
+      sort: 9
+      special: null
+      translations:
+        - language: lt-LT
+          translation: Juridinio asmens kodas
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: code
+      table: pharmacies
+      data_type: varchar
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: true
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: pharmacies
+    field: potossium_iodide_quantity
+    type: integer
+    meta:
+      collection: pharmacies
+      conditions: null
+      display: null
+      display_options: null
+      field: potossium_iodide_quantity
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: 10
+      special: null
+      translations:
+        - language: lt-LT
+          translation: Išduota Kalio jodido vnt.
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: potossium_iodide_quantity
+      table: pharmacies
+      data_type: int
+      default_value: null
+      max_length: null
+      numeric_precision: 10
+      numeric_scale: 0
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: pharmacy_units
+    field: id
+    type: uuid
+    meta:
+      collection: pharmacy_units
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 1
+      special:
+        - uuid
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: id
+      table: pharmacy_units
+      data_type: char
+      default_value: null
+      max_length: 36
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: false
+      is_unique: false
+      is_indexed: false
+      is_primary_key: true
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: pharmacy_units
+    field: status
+    type: string
+    meta:
+      collection: pharmacy_units
+      conditions: null
+      display: labels
+      display_options:
+        choices:
+          - background: var(--theme--primary-background)
+            color: var(--theme--primary)
+            foreground: var(--theme--primary)
+            text: $t:published
+            value: published
+          - background: var(--theme--background-normal)
+            color: var(--theme--foreground)
+            foreground: var(--theme--foreground)
+            text: $t:draft
+            value: draft
+          - background: var(--theme--warning-background)
+            color: var(--theme--warning)
+            foreground: var(--theme--warning)
+            text: $t:archived
+            value: archived
+        showAsDot: true
+      field: status
+      group: null
+      hidden: true
+      interface: select-dropdown
+      note: null
+      options:
+        choices:
+          - color: var(--theme--primary)
+            text: $t:published
+            value: published
+          - color: var(--theme--foreground)
+            text: $t:draft
+            value: draft
+          - color: var(--theme--warning)
+            text: $t:archived
+            value: archived
+      readonly: false
+      required: false
+      sort: 2
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: status
+      table: pharmacy_units
+      data_type: varchar
+      default_value: published
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: false
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: pharmacy_units
+    field: sort
+    type: integer
+    meta:
+      collection: pharmacy_units
+      conditions: null
+      display: null
+      display_options: null
+      field: sort
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: 3
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: sort
+      table: pharmacy_units
+      data_type: int
+      default_value: null
+      max_length: null
+      numeric_precision: 10
+      numeric_scale: 0
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: pharmacy_units
+    field: user_created
+    type: string
+    meta:
+      collection: pharmacy_units
+      conditions: null
+      display: user
+      display_options: null
+      field: user_created
+      group: null
+      hidden: true
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        template: '{{avatar}} {{first_name}} {{last_name}}'
+      readonly: true
+      required: false
+      sort: 4
+      special:
+        - user-created
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: user_created
+      table: pharmacy_units
+      data_type: char
+      default_value: null
+      max_length: 36
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: true
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: directus_users
+      foreign_key_column: id
+  - collection: pharmacy_units
+    field: date_created
+    type: timestamp
+    meta:
+      collection: pharmacy_units
+      conditions: null
+      display: datetime
+      display_options:
+        relative: true
+      field: date_created
+      group: null
+      hidden: true
+      interface: datetime
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 5
+      special:
+        - date-created
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: date_created
+      table: pharmacy_units
+      data_type: timestamp
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: pharmacy_units
+    field: user_updated
+    type: string
+    meta:
+      collection: pharmacy_units
+      conditions: null
+      display: user
+      display_options: null
+      field: user_updated
+      group: null
+      hidden: true
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        template: '{{avatar}} {{first_name}} {{last_name}}'
+      readonly: true
+      required: false
+      sort: 6
+      special:
+        - user-updated
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: user_updated
+      table: pharmacy_units
+      data_type: char
+      default_value: null
+      max_length: 36
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: true
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: directus_users
+      foreign_key_column: id
+  - collection: pharmacy_units
+    field: date_updated
+    type: timestamp
+    meta:
+      collection: pharmacy_units
+      conditions: null
+      display: datetime
+      display_options:
+        relative: true
+      field: date_updated
+      group: null
+      hidden: true
+      interface: datetime
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 7
+      special:
+        - date-updated
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: date_updated
+      table: pharmacy_units
+      data_type: timestamp
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: pharmacy_units
+    field: pharmacy
+    type: integer
+    meta:
+      collection: pharmacy_units
+      conditions: null
+      display: related-values
+      display_options:
+        template: '{{title}}'
+      field: pharmacy
+      group: null
+      hidden: false
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        template: '{{title}}'
+      readonly: false
+      required: true
+      sort: 8
+      special:
+        - m2o
+      translations:
+        - language: lt-LT
+          translation: Vaistinė
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: pharmacy
+      table: pharmacy_units
+      data_type: int unsigned
+      default_value: null
+      max_length: null
+      numeric_precision: 10
+      numeric_scale: 0
+      is_nullable: true
+      is_unique: false
+      is_indexed: true
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: pharmacies
+      foreign_key_column: id
+  - collection: pharmacy_units
+    field: address
+    type: string
+    meta:
+      collection: pharmacy_units
+      conditions: null
+      display: null
+      display_options: null
+      field: address
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: true
+      sort: 10
+      special: null
+      translations:
+        - language: lt-LT
+          translation: Adresas
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: address
+      table: pharmacy_units
+      data_type: varchar
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: pharmacy_units
+    field: eldership
+    type: string
+    meta:
+      collection: pharmacy_units
+      conditions: null
+      display: null
+      display_options: null
+      field: eldership
+      group: null
+      hidden: false
+      interface: select-dropdown
+      note: null
+      options:
+        choices:
+          - text: Verkiai
+            value: Verkiai
+          - text: Žirmūnai
+            value: Žirmūnai
+          - text: Šnipiškės
+            value: Šnipiškės
+          - text: Fabijoniškės
+            value: Fabijoniškės
+          - text: Šeškinė
+            value: Šeškinė
+          - text: Žvėrynas
+            value: Žvėrynas
+          - text: Pašilaičiai
+            value: Pašilaičiai
+          - text: Justiniškės
+            value: Justiniškės
+          - text: Viršuliškės
+            value: Viršuliškės
+          - text: Karoliniškės
+            value: Karoliniškės
+          - text: Lazdynai
+            value: Lazdynai
+          - text: Pilaitė
+            value: Pilaitė
+          - text: Antakalnis
+            value: Antakalnis
+          - text: Naujoji Vilnia
+            value: Naujoji Vilnia
+          - text: Rasos
+            value: Rasos
+          - text: Senamiestis
+            value: Senamiestis
+          - text: Naujamiestis
+            value: Naujamiestis
+          - text: Vilkpėdė
+            value: Vilkpėdė
+          - text: Naujininkai
+            value: Naujininkai
+          - text: Paneriai
+            value: Paneriai
+          - text: Grigiškės
+            value: Grigiškės
+      readonly: false
+      required: true
+      sort: 11
+      special: null
+      translations:
+        - language: lt-LT
+          translation: Seniūnija
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: eldership
+      table: pharmacy_units
+      data_type: varchar
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: pharmacy_units
+    field: user
+    type: alias
+    meta:
+      collection: pharmacy_units
+      conditions: null
+      display: related-values
+      display_options:
+        template: '{{first_name}} {{last_name}}'
+      field: user
+      group: null
+      hidden: false
+      interface: list-o2m
+      note: null
+      options:
+        template: '{{first_name}} {{last_name}}'
+      readonly: false
+      required: false
+      sort: 12
+      special:
+        - o2m
+      translations:
+        - language: lt-LT
+          translation: Darbuotojas
+      validation: null
+      validation_message: null
+      width: full
+relations:
+  - collection: directus_users
+    field: pharmacy_unit
+    related_collection: pharmacy_units
+    meta:
+      junction_field: null
+      many_collection: directus_users
+      many_field: pharmacy_unit
+      one_allowed_collections: null
+      one_collection: pharmacy_units
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: user
+      sort_field: null
+    schema:
+      table: directus_users
+      column: pharmacy_unit
+      foreign_key_table: pharmacy_units
+      foreign_key_column: id
+      constraint_name: directus_users_pharmacy_unit_foreign
+      on_update: NO ACTION
+      on_delete: SET NULL
+  - collection: directus_users
+    field: pharmacy
+    related_collection: pharmacies
+    meta:
+      junction_field: null
+      many_collection: directus_users
+      many_field: pharmacy
+      one_allowed_collections: null
+      one_collection: pharmacies
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    schema:
+      table: directus_users
+      column: pharmacy
+      foreign_key_table: pharmacies
+      foreign_key_column: id
+      constraint_name: directus_users_pharmacy_foreign
+      on_update: NO ACTION
+      on_delete: SET NULL
+  - collection: journal
+    field: user_created
+    related_collection: directus_users
+    meta:
+      junction_field: null
+      many_collection: journal
+      many_field: user_created
+      one_allowed_collections: null
+      one_collection: directus_users
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    schema:
+      table: journal
+      column: user_created
+      foreign_key_table: directus_users
+      foreign_key_column: id
+      constraint_name: journal_user_created_foreign
+      on_update: NO ACTION
+      on_delete: NO ACTION
+  - collection: journal
+    field: user_updated
+    related_collection: directus_users
+    meta:
+      junction_field: null
+      many_collection: journal
+      many_field: user_updated
+      one_allowed_collections: null
+      one_collection: directus_users
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    schema:
+      table: journal
+      column: user_updated
+      foreign_key_table: directus_users
+      foreign_key_column: id
+      constraint_name: journal_user_updated_foreign
+      on_update: NO ACTION
+      on_delete: NO ACTION
+  - collection: journal
+    field: pharmacy_unit
+    related_collection: pharmacy_units
+    meta:
+      junction_field: null
+      many_collection: journal
+      many_field: pharmacy_unit
+      one_allowed_collections: null
+      one_collection: pharmacy_units
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    schema:
+      table: journal
+      column: pharmacy_unit
+      foreign_key_table: pharmacy_units
+      foreign_key_column: id
+      constraint_name: journal_pharmacy_unit_foreign
+      on_update: NO ACTION
+      on_delete: SET NULL
+  - collection: pharmacies
+    field: user_created
+    related_collection: directus_users
+    meta:
+      junction_field: null
+      many_collection: pharmacies
+      many_field: user_created
+      one_allowed_collections: null
+      one_collection: directus_users
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    schema:
+      table: pharmacies
+      column: user_created
+      foreign_key_table: directus_users
+      foreign_key_column: id
+      constraint_name: pharmacies_user_created_foreign
+      on_update: NO ACTION
+      on_delete: NO ACTION
+  - collection: pharmacies
+    field: user_updated
+    related_collection: directus_users
+    meta:
+      junction_field: null
+      many_collection: pharmacies
+      many_field: user_updated
+      one_allowed_collections: null
+      one_collection: directus_users
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    schema:
+      table: pharmacies
+      column: user_updated
+      foreign_key_table: directus_users
+      foreign_key_column: id
+      constraint_name: pharmacies_user_updated_foreign
+      on_update: NO ACTION
+      on_delete: NO ACTION
+  - collection: pharmacy_units
+    field: user_created
+    related_collection: directus_users
+    meta:
+      junction_field: null
+      many_collection: pharmacy_units
+      many_field: user_created
+      one_allowed_collections: null
+      one_collection: directus_users
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    schema:
+      table: pharmacy_units
+      column: user_created
+      foreign_key_table: directus_users
+      foreign_key_column: id
+      constraint_name: pharmacy_units_user_created_foreign
+      on_update: NO ACTION
+      on_delete: NO ACTION
+  - collection: pharmacy_units
+    field: user_updated
+    related_collection: directus_users
+    meta:
+      junction_field: null
+      many_collection: pharmacy_units
+      many_field: user_updated
+      one_allowed_collections: null
+      one_collection: directus_users
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    schema:
+      table: pharmacy_units
+      column: user_updated
+      foreign_key_table: directus_users
+      foreign_key_column: id
+      constraint_name: pharmacy_units_user_updated_foreign
+      on_update: NO ACTION
+      on_delete: NO ACTION
+  - collection: pharmacy_units
+    field: pharmacy
+    related_collection: pharmacies
+    meta:
+      junction_field: null
+      many_collection: pharmacy_units
+      many_field: pharmacy
+      one_allowed_collections: null
+      one_collection: pharmacies
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    schema:
+      table: pharmacy_units
+      column: pharmacy
+      foreign_key_table: pharmacies
+      foreign_key_column: id
+      constraint_name: pharmacy_units_pharmacy_foreign
+      on_update: NO ACTION
+      on_delete: SET NULL
