@@ -29,6 +29,10 @@ INSERT INTO `directus_roles` (`id`, `name`, `icon`, `description`, `parent`) VAL
 
 # ACCESS
 INSERT INTO `directus_access` (`id`, `role`, `user`, `policy`, `sort`) VALUES ('7d8cb226-007b-4c3c-ad03-df31f3819262', '929f7cd3-e5be-49d6-8e1e-392cef643944', NULL, '014eb62d-a5fc-4c16-8fbd-bc061d3f71d7', 1);
+INSERT INTO `directus_access` (`id`, `role`, `user`, `policy`, `sort`) VALUES ('05066b19-6e2e-479a-a3da-e8c64b1c852a', 'd9e1332d-1df4-4ff9-bd63-7761082854a7', NULL, '7c8e5c89-bd97-4136-a5e3-c214c536fd35', 2);
+INSERT INTO `directus_access` (`id`, `role`, `user`, `policy`, `sort`) VALUES ('4109b7ae-ceef-4dfe-bd60-efa257335e51', 'd9e1332d-1df4-4ff9-bd63-7761082854a7', NULL, '65759360-190e-4288-af93-977011f7189f', 1);
+INSERT INTO `directus_access` (`id`, `role`, `user`, `policy`, `sort`) VALUES ('4e90b3f5-b253-4ca7-a9ec-4e5af27d0fa2', 'eeda376a-ec84-4155-8c45-e40ad82be90f', NULL, 'cf00ea3d-5107-41f2-a0c0-77addf1ef237', 2);
+INSERT INTO `directus_access` (`id`, `role`, `user`, `policy`, `sort`) VALUES ('7ce0b18f-f67e-40a4-926d-0d39caf02aaa', 'eeda376a-ec84-4155-8c45-e40ad82be90f', NULL, '65759360-190e-4288-af93-977011f7189f', 1);
 
 # PRESETS
 INSERT INTO `directus_presets` (`id`, `bookmark`, `user`, `role`, `collection`, `search`, `layout`, `layout_query`, `layout_options`, `refresh_interval`, `filter`, `icon`, `color`) VALUES (4, NULL, NULL, NULL, 'pharmacies', NULL, 'tabular', '{"tabular": {"fields": ["code", "title", "potossium_iodide_quantity"]}}', '{"tabular": {"widths": {"potossium_iodide_quantity": 212.4150390625}}}', NULL, NULL, 'bookmark', NULL);
