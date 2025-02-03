@@ -1,15 +1,17 @@
 ## Installation
-1. **Start Directus using Docker Compose**:
+1. **Copy .env.example** and rename it to `.env`.
+
+2. **Start Directus using Docker Compose**:
 ``` sh
 docker-compose up -d
 ```
-2. **Seed the database**:
+3. **Seed the database**:
 Insert data into database tables using `data/seeds/seed.sql` file
-3. **Create admin user**:
+4. **Create admin user**:
 ``` sh
 docker-compose exec directus sh -c "npx directus users create --email <user-email> --password <password> --role 929f7cd3-e5be-49d6-8e1e-392cef643944"
 ```
-4. **Access Directus**:
+5. **Access Directus**:
    Once Directus has started, visit your app at:
 http://localhost:8056
 
